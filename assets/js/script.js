@@ -37,17 +37,21 @@ function runGame(gameType) {
  * the returned calculateCorrectAnswers array
  */
 function checkAnswer() {
-    let userAnswer = parseInt(document.getElementById("answer-box").value);
-    let calculatedCorrectAnswer = calculateCorrectAnswer();
-    let isCorrect = userAnswer === calculatedCorrectAnswer[0];
+  let userAnswer = parseInt(document.getElementById("answer-box").value);
+  let calculatedCorrectAnswer = calculateCorrectAnswer();
+  let isCorrect = userAnswer === calculatedCorrectAnswer[0];
 
-    if(isCorrect){
-        alert("Hey! You got it right! :D");
-    } else {
-        alert(`Aww....you answered ${userAnswer}. The correct answer was ${calculatedCorrectAnswer[0]}`);
-    }
+  if (isCorrect) {
+    incrementScore();
+    alert("Hey! You got it right! :D");
+  } else {
+    incrementWrongAnswer();
+    alert(
+      `Aww....you answered ${userAnswer}. The correct answer was ${calculatedCorrectAnswer[0]}`
+    );
+  }
 
-    runGame(calculatedCorrectAnswer[1]);
+  runGame(calculatedCorrectAnswer[1]);
 }
 
 /**
@@ -66,9 +70,23 @@ function calculateCorrectAnswer() {
   }
 }
 
-function incrementScore() {}
+/**
+ * Gets the current score from DOM and increments it by 1
+ */
+function incrementScore() {
+  const scoreElement = document.getElementById("score");
+  let score = parseInt(scoreElement.innerText);
+  scoreElement.innerText = ++score;
+}
 
-function incrementWrongAnswer() {}
+/**
+ * Gets the current incorrect score from the DOM and increments by 1
+ */
+function incrementWrongAnswer() {
+  const incorrectElement = document.getElementById("incorrect");
+  let incorrect = parseInt(incorrectElement.innerText);
+  incorrectElement.innerText = ++incorrect;
+}
 
 function displayAdditionQuestion(operand1, operand2) {
   document.getElementById("operand1").innerText = operand1;
